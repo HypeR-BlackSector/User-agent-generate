@@ -33,22 +33,22 @@ connections = ["keep-alive", "close"]
 # Список архитектур
 architectures = ["arm64", "armeabi-v7a", "x86_64"]
 
-# Функция для получения списка моделей Android с сайта
-def get_android_models():
-    url = 'https://www.gsmarena.com/makers.php3'
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-
-    models = []
-    for maker in soup.find_all('div', {'class': 'makers'}):
-        for link in maker.find_all('a'):
-            if 'android' in link.get('href', '').lower():
-                models.append(link.text.strip())
-    return models
+# Пример ручного списка моделей Android
+android_models = [
+    "Samsung Galaxy S21", "Google Pixel 5", "OnePlus 9", "Xiaomi Mi 11", "Huawei P40", 
+    "Sony Xperia 5 II", "Motorola Moto G Power", "LG Velvet", "Asus Zenfone 7", 
+    "Realme X50", "Oppo Reno 4", "Nokia 8.3", "Honor 30 Pro", "Vivo V20"
+]
 
 # Функция для проверки, поддерживает ли модель Telegram
 def supports_telegram(version):
-    version_numbers = [int(x) for x in version.split('.')]
+    try:
+        version_float = float(version)
+    except ValueError:
+        print(f"Некорректная версия Android: {version}")
+        return False
+
+    version_numbers = [int(x) for x in str(version_float).split('.')]
     min_version_numbers = [int(x) for x in str(min_android_version).split('.')]
     
     if version_numbers[0] > min_version_numbers[0]:
@@ -56,9 +56,6 @@ def supports_telegram(version):
     elif version_numbers[0] == min_version_numbers[0] and version_numbers[1] >= min_version_numbers[1]:
         return True
     return False
-
-# Получаем список моделей Android
-android_models = get_android_models()
 
 # Функция для генерации уникальных User-Agent строк
 def generate_user_agents(android_versions, android_models, browsers, render_engines, count):
@@ -70,7 +67,7 @@ def generate_user_agents(android_versions, android_models, browsers, render_engi
         version = random.choice(android_versions)
 
         # Проверка на поддержку Telegram
-        if not supports_telegram(float(version)):
+        if not supports_telegram(version):
             continue  # Пропускаем модели, которые не поддерживают Telegram
 
         # Выбираем случайный браузер и его версию
