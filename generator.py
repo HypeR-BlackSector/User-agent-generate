@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import sys
 import random
 import uuid
 
@@ -97,8 +98,16 @@ def generate_user_agents(android_versions, android_models, browsers, render_engi
     # Возвращаем все уникальные User-Agent'ы
     return list(user_agents)
 
-# Запрос количества User-Agent'ов
-count = int(input("Введите количество User-Agent'ов для генерации: "))
+# Запрос количества User-Agent'ов с проверкой диапазона
+count_input = input("Введите количество User-Agent'ов для генерации: ")
+try:
+    count = int(count_input)
+    if not 1 <= count <= 1000:
+        print("Ошибка: количество должно быть целым числом от 1 до 1000.")
+        sys.exit(1)
+except ValueError:
+    print("Ошибка: количество должно быть целым числом от 1 до 1000.")
+    sys.exit(1)
 
 # Генерация указанного количества уникальных User-Agent'ов для Android, поддерживающих Telegram
 generated_user_agents = generate_user_agents(
