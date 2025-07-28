@@ -51,12 +51,11 @@ User-Agent Generator with Telegram Support Check
 1. Скачайте или склонируйте репозиторий с этим скриптом.
 
 
-2. Установите все необходимые зависимости (например, requests и beautifulsoup4).
-
+2. Скрипт не требует дополнительных зависимостей.
 
 3. Запустите скрипт:
 
-python generate_user_agents.py
+python generator.py
 
 
 4. Введите количество User-Agent строк, которые вы хотите сгенерировать (например, 100).
