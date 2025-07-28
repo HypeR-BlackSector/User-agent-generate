@@ -94,13 +94,13 @@ def generate_user_agents(android_versions, android_models, browsers, render_engi
         if user_agent not in user_agents:
             user_agents.add(user_agent)
 
-    # Возвращаем все уникальные User-Agent'ы
+    # Возвращаем все уникальные User-Agentы
     return list(user_agents)
 
-# Запрос количества User-Agent'ов
-count = int(input("Введите количество User-Agent'ов для генерации: "))
+# Запрос количества User-Agentов
+count = int(input("Введите количество User-Agentов для генерации: "))
 
-# Генерация указанного количества уникальных User-Agent'ов для Android, поддерживающих Telegram
+# Генерация указанного количества уникальных User-Agentов для Android, поддерживающих Telegram
 generated_user_agents = generate_user_agents(
     android_versions=["8.0", "9.0", "10", "11", "12", "13", "14"],
     android_models=android_models,
@@ -109,10 +109,10 @@ generated_user_agents = generate_user_agents(
     count=count
 )
 
-# Запись результата в файл с пробелами между User-Agent'ами
+# Запись результата в файл с пробелами между User-Agentами
 file_name = f'android_user_agents_with_telegram_support_{count}.txt'
 with open(file_name, 'w') as file:
     for agent in generated_user_agents:
         file.write(agent + '\n\n')  # Каждую строку с новой строки и пробелом между ними
 
-print(f"{len(generated_user_agents)} уникальных Android User-Agent'ов, поддерживающих Telegram, были успешно сгенерированы и сохранены в файл {file_name}.")
+print(f"{len(generated_user_agents)} уникальных Android User-Agentов, поддерживающих Telegram, были успешно сгенерированы и сохранены в файл {file_name}.")
